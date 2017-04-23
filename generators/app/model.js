@@ -16,37 +16,37 @@ const models = [];
 
 let newModelAttributes = {
   name: '',
-  schemas: []
+  fields: []
 };
 
-const schemaPrompt = (yo, projectName, packageName) => {
+const fieldPrompt = (yo, projectName, packageName, pomObj) => {
 	return yo.prompt([{
 		type: 'input',
 		name: 'name',
-		message: 'Schema Name'
+		message: 'Field name'
 	}, {
 		name: 'type',
 		message: 'What type?',
 		type: 'list',
 		choices: choicesArr
 	}]).then((model) => {
-		newModelAttributes.schemas.push({
+		newModelAttributes.fields.push({
       name: model.name,
       type: model.type
     });
 		yo.prompt([{
 			type: 'confirm',
 			name: 'continue',
-			message: 'Add another schema?'
+			message: 'Add another field?'
 		}]).then((response) => {
 			if (response.continue) {
-				schemaPrompt(yo, projectName, packageName);
+				fieldPrompt(yo, projectName, packageName, pomObj);
 			} else {
 				models.push(newModelAttributes);
 				choicesArr.push(newModelAttributes.name);
 				newModelAttributes = {
           name: '',
-          schemas: []
+          fields: []
         };
 				yo.prompt([{
 						type: 'confirm',
@@ -54,9 +54,9 @@ const schemaPrompt = (yo, projectName, packageName) => {
 						message: 'Add another model?'
 				}]).then((answer) => {
 					if(answer.addAnother) {
-						modelPrompt(yo, projectName, packageName);
+						modelPrompt(yo, projectName, packageName, pomObj);
 					} else {
-						createModels(yo, projectName, packageName)
+						createModels(yo, projectName, packageName, pomObj)
 					}
 				});
 			}
@@ -64,18 +64,18 @@ const schemaPrompt = (yo, projectName, packageName) => {
 	});
 }
 
-const modelPrompt = (yo, projectName, packageName) => {
+const modelPrompt = (yo, projectName, packageName, pomObj) => {
 	yo.prompt([{
 		type: 'input',
 		name: 'name',
-		message: 'Model Name?'
+		message: 'Model name?'
 	},]).then((model) => {
 		newModelAttributes.name = model.name;
-		schemaPrompt(yo, projectName, packageName);
+		fieldPrompt(yo, projectName, packageName, pomObj);
 	});
 }
 
-const createModels = (yo, projectName, packageName) => {
+const createModels = (yo, projectName, packageName, pomObj) => {
 	const file = packageName.split('.').join('/')
 	models.forEach((model) => {
     yo.fs.copyTpl(
@@ -85,7 +85,7 @@ const createModels = (yo, projectName, packageName) => {
     );
   });
 
-  generator.generateNewProject(yo, projectName, packageName);
+  generator.generateNewProject(yo, projectName, packageName, pomObj);
 }
 
 module.exports = {

@@ -23,19 +23,18 @@ import javax.persistence.Table;
 @SharePermission(expression = "Prefab.Role.All")
 //@CreatePermission(expression = "Prefab.Role.All")
 public class <%= name %> {
-	<% schemas.forEach(function(schema){ %>
-	private <%= schema.type %> <%= schema.name %>;<% }); %>
+	<% fields.forEach((field) => { %>
+	private <%= field.type %> <%= field.name %>;<% }); %>
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
-	<% schemas.forEach(function(schema){ %>
-	public <%= schema.type %> get<%= schema.name %>() {
-		return <%= schema.name %>;
+	<% fields.forEach(function(field){ %>
+	public <%= field.type %> get<%= field.name %>() {
+		return <%= field.name %>;
 	}
-	public void set<%= schema.name %>(<%= schema.type %> <%= schema.name %>) {
-		this.<%= schema.name %> = <%= schema.name %>;
+	public void set<%= field.name %>(<%= field.type %> <%= field.name %>) {
+		this.<%= field.name %> = <%= field.name %>;
 	}
 	<% }); %>
-
 }

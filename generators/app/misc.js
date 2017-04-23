@@ -1,5 +1,5 @@
 // Show info
-function showInfo() {
+const showInfo = () => {
     const eb1 = '_____ _ _   _        _____         _   '
     const eb2 = '|   __| |_|_| |___   | __  |___ ___| |_ '
     const eb3 = '|   __| | | . | -_|  | __ -| . | . |  _|'

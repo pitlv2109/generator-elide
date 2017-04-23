@@ -1,9 +1,8 @@
-// Generate an example
 const generateExampleProject = (yo, projectName) => {
   const file = projectName.split('.').join('/');
   // Create the main.java file
   yo.fs.copyTpl(
-    yo.templatePath('blog-example/Main.java'),
+    yo.templatePath('main.java'),
     yo.destinationPath('elide-blog-example/src/main/java/' + file + '/Main.java'),
     {groupId : projectName}
   );
@@ -55,55 +54,59 @@ const generateExampleProject = (yo, projectName) => {
 
   // create the pom files
   yo.fs.copyTpl(
-    yo.templatePath('template-pom.xml'),
+    yo.templatePath('pom.xml'),
     yo.destinationPath('elide-blog-example/pom.xml'),
     {
-      artifactId  : 'elide-blog-example',
-      groupId     : 'com.yahoo.elide',
-      name        : 'Elide Example: Hibernate5 API with Security',
-      version     : '3.0.5-SNAPSHOT',
-      description : 'lide example using javax.persistence, MySQL and Elide Security'
+      artifactId: 'elide-blog-example',
+      groupId: 'com.yahoo.elide',
+      name: 'Elide Example: Hibernate5 API with Security',
+      version: '3.0.5-SNAPSHOT',
+      description: 'lide example using javax.persistence, MySQL and Elide Security'
     }
   );
 }
 
-const generateNewProject = (yo, projectName, package_name, pom_obj) => {
-  const file = package_name.split('.').join('/');
-  // Create the main.java file
+const generateNewProject = (yo, projectName, packageName, pomObj) => {
+  const file = packageName.split('.').join('/');
+  const destJavaPath = `${projectName}/src/main/java`;
+  const destResourcePath = `${projectName}/src/main/resources`;
+
   yo.fs.copyTpl(
-    yo.templatePath('blog-example/Main.java'),
-    yo.destinationPath(projectName + '/src/main/java/' + file + '/Main.java'),
-    {groupId : package_name}
-  );
-  yo.fs.copyTpl(
-    yo.templatePath('blog-example/ElideResourceConfig.java'),
-    yo.destinationPath(projectName + '/src/main/java/' + file + '/ElideResourceConfig.java'),
-    {groupId : package_name}
+    yo.templatePath('main.java'),
+    yo.destinationPath(`${destJavaPath}/${file}/Main.java`),
+    { groupId : packageName }
   );
 
-  // Don't know what this is
+  yo.fs.copyTpl(
+    yo.templatePath('blog-example/ElideResourceConfig.java'),
+    yo.destinationPath(`${destJavaPath}/${file}/ElideResourceConfig.java`),
+    { groupId : packageName }
+  );
+
   yo.fs.copyTpl(
     yo.templatePath('blog-example/hibernate.cfg.xml'),
-    yo.destinationPath(projectName + '/src/main/resources/hibernate.cfg.xml'),
+    yo.destinationPath(`${destResourcePath}/hibernate.cfg.xml`),
     {}
   );
+
   yo.fs.copyTpl(
     yo.templatePath('blog-example/log4j2.xml'),
-    yo.destinationPath(projectName + '/src/main/resources/log4j2.xml'),
+    yo.destinationPath(`${destResourcePath}/log4j2.xml`),
     {}
   );
 
   yo.fs.copyTpl(
     yo.templatePath('blog-example/load_blog.sh'),
-    yo.destinationPath(projectName + '/src/main/scripts/load_blog.sh'),
+    yo.destinationPath(`${projectName}/src/main/scripts/load_blog.sh`),
     {}
   );
 
-  // create the pom files when creating new project
+  console.log('POM OBJECT', pomObj);
+
   yo.fs.copyTpl(
-    yo.templatePath('template-pom.xml'),
-    yo.destinationPath(projectName + '/pom.xml'),
-    pom_obj
+    yo.templatePath('pom.xml'),
+    yo.destinationPath(`${projectName}/pom.xml`),
+    pomObj
   );
 }
 
