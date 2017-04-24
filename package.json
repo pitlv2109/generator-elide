@@ -2,10 +2,6 @@
   "name": "generator-elide",
   "version": "1.0.0",
   "description": "This is a generator for the elide boot feature",
-  "main": "index.js",
-  "scripts": {
-    "test": "install"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shaneneary/generator-elide.git"
@@ -24,7 +20,7 @@
   "homepage": "https://github.com/shaneneary/generator-elide",
   "dependencies": {
     "yeoman-generator": "^1.1.1"
-},
+  },
   "files":[
     "app"
   ]

@@ -17,7 +17,7 @@ class ElideGenerator extends Generator {
 		if (this.options.example) {
 			console.log('Generate an example');
 			generator.generateExampleProject(this, 'com.yahoo.elide.example');
-			console.log('Example project created under elide/elide-example');
+			console.log('Example project created in elide-blog-example directory');
 		}
 		else if (this.options.create) {
 			console.log('Create a new project');
@@ -28,7 +28,7 @@ class ElideGenerator extends Generator {
 			model.modelPrompt(this);
 		}
 		else if (this.options.info){
-			misc.showInfo()
+			misc.showInfo();
 		}
 		else {
 			prompt.prompting(this);

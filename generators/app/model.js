@@ -1,5 +1,7 @@
 const generator = require('./generator');
 
+const srcJavaPath = 'src/main/java';
+
 const choicesArr = [
   'String',
   'Int',
@@ -23,7 +25,7 @@ const fieldPrompt = (yo, projectName, packageName, pomObj) => {
 	return yo.prompt([{
 		type: 'input',
 		name: 'name',
-		message: 'Field name'
+		message: 'Field name?'
 	}, {
 		name: 'type',
 		message: 'What type?',
@@ -78,10 +80,11 @@ const modelPrompt = (yo, projectName, packageName, pomObj) => {
 const createModels = (yo, projectName, packageName, pomObj) => {
 	const file = packageName.split('.').join('/')
 	models.forEach((model) => {
+    const newModel = Object.assign(model, { groupId: packageName });
     yo.fs.copyTpl(
-      yo.templatePath('model.java'),
+      yo.templatePath(`${srcJavaPath}/models/Model.java`),
       yo.destinationPath(`${projectName}/src/main/java/${file}/models/${model.name}.java`),
-      model
+      newModel
     );
   });
 

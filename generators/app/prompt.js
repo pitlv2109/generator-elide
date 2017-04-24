@@ -13,7 +13,7 @@ const prompting = (yo) => {
     switch (answers.command) {
       case 'Try an example':
         generator.generateExampleProject(yo, 'com.yahoo.elide.example');
-        console.log('Example project created under elide/elide-example');
+        console.log('Example project created in the elide-blog-example directory');
         break;
       case 'Create a new project':
         createNewProject(yo);
@@ -30,35 +30,35 @@ const createNewProject = (yo) => {
   yo.prompt([{
     type: 'input',
     name: 'groupId',
-    message: 'groupId'
+    message: 'groupId?'
   }, {
     type: 'input',
     name: 'artifactId',
-    message: 'artifactId'
+    message: 'artifactId?'
   }, {
     type: 'input',
     name: 'projectName',
-    message: 'Project name'
+    message: 'Project name?'
   }, {
     type: 'input',
     name: 'description',
-    message: 'Description'
+    message: 'Description?'
   }, {
     type: 'input',
     name: 'version',
-    message: 'Version'
+    message: 'Version?'
   }, {
     type: 'input',
     name: 'author',
-    message: 'Author'
+    message: 'Author?'
   }, {
     type: 'input',
     name: 'license',
-    message: 'License'
+    message: 'License?'
   }, {
     type: 'confirm',
     name: 'model',
-    message: 'Would you like to add a model?'
+    message: 'Add a model and fields?'
   }]).then((answers) => {
     if (answers.model) {
       model.modelPrompt(yo, answers.artifactId, answers.groupId, {

@@ -1,9 +1,4 @@
-/*
- * Copyright 2016, Yahoo Inc.
- * Licensed under the Apache License, Version 2.0
- * See LICENSE file in project root for terms.
- */
-package com.yahoo.elide.example.models;
+package <%= groupId %>.models;
 
 import com.yahoo.elide.annotation.Include;
 import com.yahoo.elide.annotation.SharePermission;
@@ -14,14 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * Model for Users (author of posts and author of comments).
- */
 @Entity
 @Table(name = "user")
 @Include(rootLevel = true)
 @SharePermission(expression = "Prefab.Role.All")
-//@CreatePermission(expression = "Prefab.Role.All")
 public class <%= name %> {
 	<% fields.forEach((field) => { %>
 	private <%= field.type %> <%= field.name %>;<% }); %>
