@@ -101,8 +101,6 @@ const generateNewProject = (yo, projectName, packageName, pomObj) => {
     {}
   );
 
-  console.log('POM OBJECT', pomObj);
-
   yo.fs.copyTpl(
     yo.templatePath('pom.xml'),
     yo.destinationPath(`${projectName}/pom.xml`),

@@ -1,4 +1,3 @@
-// Show info
 const showInfo = () => {
     const eb1 = '_____ _ _   _        _____         _   '
     const eb2 = '|   __| |_|_| |___   | __  |___ ___| |_ '

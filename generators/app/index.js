@@ -1,17 +1,16 @@
-var Generator = require('yeoman-generator');
-var prompt = require('./prompt');
-var model = require('./model');
-var generator = require('./generator');
-var misc = require('./misc.js');
+const Generator = require('yeoman-generator');
+const prompt = require('./prompt');
+const model = require('./model');
+const generator = require('./generator');
+const misc = require('./misc.js');
 
-module.exports = class extends Generator {
+class ElideGenerator extends Generator {
 	constructor(args, opts) {
-		// Calling the super constructor is important so our generator is correctly set up
-		super(args, opts);
+    super(args, opts);
 
-        this.option('example');		// Option flag to generate an example
-		this.option('create');		// Option flag to create a new project
-		this.option('info');		// Option flag to show Elide boot info
+    this.option('example');	// Option flag to generate an example
+		this.option('create');	// Option flag to create a new project
+		this.option('info');		// Option flag to show Elide Boot info
 	}
 
 	main() {
@@ -36,3 +35,5 @@ module.exports = class extends Generator {
 		}
 	}
 };
+
+module.exports = ElideGenerator
