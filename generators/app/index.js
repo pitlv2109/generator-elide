@@ -9,8 +9,8 @@ class ElideGenerator extends Generator {
     super(args, opts);
 
     this.option('example');	// Option flag to generate an example
-		this.option('create');	// Option flag to create a new project
-		this.option('info');		// Option flag to show Elide Boot info
+    this.option('create');	// Option flag to create a new project
+    this.option('info');		// Option flag to show Elide Boot info
 	}
 
 	main() {

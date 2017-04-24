@@ -69,7 +69,7 @@ const createNewProject = (yo) => {
         description: answers.description
       });
     } else {
-      generator.generateNewProject(yo, answers.artifactId, answers.groupId, {
+      generator.generateNewProject(yo, {
         artifactId: answers.artifactId,
         groupId: answers.groupId,
         name: answers.projectName,

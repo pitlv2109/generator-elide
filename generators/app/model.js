@@ -88,7 +88,7 @@ const createModels = (yo, projectName, packageName, pomObj) => {
     );
   });
 
-  generator.generateNewProject(yo, projectName, packageName, pomObj);
+  generator.generateNewProject(yo, pomObj);
 }
 
 module.exports = {

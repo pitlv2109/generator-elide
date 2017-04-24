@@ -3,6 +3,8 @@ const generateExampleProject = (yo, groupId) => {
   const file = groupId.split('.').join('/');
 
   const srcJavaPath = 'src/main/java';
+  const srcResourcePath = 'src/main/resources';
+
   const dstRootPath = 'elide-blog-example';
   const dstJavaPath = `${dstRootPath}/src/main/java`;
   const dstResourcePath = `${dstRootPath}/src/main/resources`;
@@ -36,12 +38,12 @@ const generateExampleProject = (yo, groupId) => {
     yo.destinationPath('elide-blog-example/src/main/java/' + file + '/models/User.java')
   );
   yo.fs.copyTpl(
-    yo.templatePath('blog-example/hibernate.cfg.xml'),
-    yo.destinationPath('elide-blog-example/src/main/resources/hibernate.cfg.xml')
+    yo.templatePath(`${srcResourcePath}/hibernate.cfg.xml`),
+    yo.destinationPath(`${dstResourcePath}/hibernate.cfg.xml`)
   );
   yo.fs.copyTpl(
-    yo.templatePath('blog-example/log4j2.xml'),
-    yo.destinationPath('elide-blog-example/src/main/resources/log4j2.xml')
+    yo.templatePath(`${srcResourcePath}/log4j2.xml`),
+    yo.destinationPath(`${dstResourcePath}/log4j2.xml`)
   );
   yo.fs.copyTpl(
     yo.templatePath('blog-example/load_blog.sh'),
@@ -65,30 +67,32 @@ const generateExampleProject = (yo, groupId) => {
   );
 }
 
-const generateNewProject = (yo, artifactId, groupId, pomObj) => {
-  const file = groupId.split('.').join('/');
+const generateNewProject = (yo, pomObj) => {
+  const file = pomObj.groupId.split('.').join('/');
 
   const srcJavaPath = 'src/main/java';
-  const dstRootPath = artifactId;
+  const srcResourcePath = 'src/main/resources';
+
+  const dstRootPath = pomObj.artifactId;
   const dstJavaPath = `${dstRootPath}/src/main/java`;
   const dstResourcePath = `${dstRootPath}/src/main/resources`;
 
   yo.fs.copyTpl(
     yo.templatePath(`${srcJavaPath}/Main.java`),
     yo.destinationPath(`${dstJavaPath}/${file}/Main.java`),
-    { groupId }
+    { groupId: pomObj.groupId }
   );
   yo.fs.copyTpl(
     yo.templatePath(`${srcJavaPath}/ElideResourceConfig.java`),
     yo.destinationPath(`${dstJavaPath}/${file}/ElideResourceConfig.java`),
-    { groupId }
+    { groupId: pomObj.groupId }
   );
   yo.fs.copyTpl(
-    yo.templatePath('blog-example/hibernate.cfg.xml'),
+    yo.templatePath(`${srcResourcePath}/hibernate.cfg.xml`),
     yo.destinationPath(`${dstResourcePath}/hibernate.cfg.xml`)
   );
   yo.fs.copyTpl(
-    yo.templatePath('blog-example/log4j2.xml'),
+    yo.templatePath(`${srcResourcePath}/log4j2.xml`),
     yo.destinationPath(`${dstResourcePath}/log4j2.xml`)
   );
   yo.fs.copyTpl(
