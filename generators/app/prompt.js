@@ -60,22 +60,12 @@ const createNewProject = (yo) => {
     name: 'model',
     message: 'Add a model and fields?'
   }]).then((answers) => {
+    const { artifactId, groupId, projectName, version, description } = answers;
+
     if (answers.model) {
-      model.modelPrompt(yo, answers.artifactId, answers.groupId, {
-        artifactId: answers.artifactId,
-        groupId: answers.groupId,
-        name: answers.projectName,
-        version: answers.version,
-        description: answers.description
-      });
+      model.modelPrompt(yo, { artifactId, groupId, projectName, version, description });
     } else {
-      generator.generateNewProject(yo, {
-        artifactId: answers.artifactId,
-        groupId: answers.groupId,
-        name: answers.projectName,
-        version: answers.version,
-        description: answers.description
-      });
+      generator.generateNewProject(yo, { artifactId, groupId, projectName, version, description });
     }
   });
 }

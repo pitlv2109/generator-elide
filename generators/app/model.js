@@ -2,7 +2,7 @@ const generator = require('./generator');
 
 const srcJavaPath = 'src/main/java';
 
-const choicesArr = [
+const choices = [
   'String',
   'Int',
   'Short',
@@ -21,7 +21,7 @@ let newModelAttributes = {
   fields: []
 };
 
-const fieldPrompt = (yo, projectName, packageName, pomObj) => {
+const fieldPrompt = (yo, pomObj) => {
 	return yo.prompt([{
 		type: 'input',
 		name: 'name',
@@ -30,22 +30,20 @@ const fieldPrompt = (yo, projectName, packageName, pomObj) => {
 		name: 'type',
 		message: 'What type?',
 		type: 'list',
-		choices: choicesArr
+		choices
 	}]).then((model) => {
-		newModelAttributes.fields.push({
-      name: model.name,
-      type: model.type
-    });
+    const { name, type } = model;
+		newModelAttributes.fields.push({ name, type });
 		yo.prompt([{
 			type: 'confirm',
 			name: 'continue',
 			message: 'Add another field?'
 		}]).then((response) => {
 			if (response.continue) {
-				fieldPrompt(yo, projectName, packageName, pomObj);
+				fieldPrompt(yo, pomObj);
 			} else {
 				models.push(newModelAttributes);
-				choicesArr.push(newModelAttributes.name);
+				choices.push(newModelAttributes.name);
 				newModelAttributes = {
           name: '',
           fields: []
@@ -55,35 +53,31 @@ const fieldPrompt = (yo, projectName, packageName, pomObj) => {
 						name: 'addAnother',
 						message: 'Add another model?'
 				}]).then((answer) => {
-					if(answer.addAnother) {
-						modelPrompt(yo, projectName, packageName, pomObj);
-					} else {
-						createModels(yo, projectName, packageName, pomObj)
-					}
+          answer.addAnother ? modelPrompt(yo, pomObj) : createModels(yo, pomObj);
 				});
 			}
 		});
 	});
 }
 
-const modelPrompt = (yo, projectName, packageName, pomObj) => {
+const modelPrompt = (yo, pomObj) => {
 	yo.prompt([{
 		type: 'input',
 		name: 'name',
 		message: 'Model name?'
 	},]).then((model) => {
 		newModelAttributes.name = model.name;
-		fieldPrompt(yo, projectName, packageName, pomObj);
+		fieldPrompt(yo, pomObj);
 	});
 }
 
-const createModels = (yo, projectName, packageName, pomObj) => {
-	const file = packageName.split('.').join('/')
+const createModels = (yo, pomObj) => {
+	const file = pomObj.groupId.split('.').join('/')
 	models.forEach((model) => {
-    const newModel = Object.assign(model, { groupId: packageName });
+    const newModel = Object.assign(model, { groupId: pomObj.groupId });
     yo.fs.copyTpl(
       yo.templatePath(`${srcJavaPath}/models/Model.java`),
-      yo.destinationPath(`${projectName}/src/main/java/${file}/models/${model.name}.java`),
+      yo.destinationPath(`${pomObj.artifactId}/src/main/java/${file}/models/${model.name}.java`),
       newModel
     );
   });

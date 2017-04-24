@@ -56,7 +56,7 @@ const generateExampleProject = (yo, groupId) => {
     {
       artifactId: 'elide-blog-example',
       groupId: 'com.yahoo.elide',
-      name: 'Elide Example: Hibernate5 API with Security',
+      projectName: 'Elide Example: Hibernate5 API with Security',
       version: '3.0.5-SNAPSHOT',
       description: 'Elide example using javax.persistence, MySQL and Elide Security'
     }
